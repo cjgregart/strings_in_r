@@ -79,3 +79,46 @@ cat(headers_all)
 
 bodies_all <- str_sub(emails, start = locations[,2])
 cat(bodies_all)
+
+
+### Second lab
+
+# 1. create the following vector of strings in R:
+
+fruit <- c("apple", "banana", "pear", "pineapple")
+
+# 2. run the following lines of code, and try to understand what's happening
+
+str_detect(fruit,"a")   # has an a
+str_detect(fruit,"^a")        # starts with a
+str_detect(fruit, "a$")       # ends with a
+str_detect(fruit, "[aeiou]")  # has any ( [] = or), a or e or i or o or u
+str_detect(fruit, "[a-d]")    # has any a through d, a or b or c or d
+
+# 3. using regular expressions write down a line of R code
+#     to detect which of the fruits starts with an "a"
+#     and ends with an "e".  
+
+str_detect(fruit, "^a[a-z]*e$")   # starts with a, has a-z zero or more times, ends with e
+str_detect(fruit, "^a.*e$")       # dot means any character or number, * means any amount of times
+
+# 4. create a parser that detects phone numbers of this format 213 740 4826
+
+str_detect("213 740 4826", "[0-9]{3} [0-9]{3} [0-9]{4}")
+
+# 5. how are phone numbers formatted?  look at the body of messages 10 and 18 in the emails dataset
+#     create a parser that detects those formats of phone numbers.
+
+cat(emails[10])
+cat(emails[18])
+
+# formats are ###-###-#### and ### ### ####
+
+phone = c("213 740 4826",
+          "213-740-4826",
+          "(213) 740 4826")
+
+str_detect(phone, "[(]?[0-9]{3}[)]?[- ][0-9]{3}[- ][0-9]{4}")   # [- ] means dash or space
+
+
+str_extract_all(bodies_all,"[(]?[0-9]{3}[)]?[- ][0-9]{3}[- ][0-9]{4}")
